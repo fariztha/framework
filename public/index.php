@@ -13,6 +13,9 @@ $container = require __DIR__ . '/../system/bootstrap.php';
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/', 'App\Controllers\HomeController');
     $r->addRoute('GET', '/test', ['App\Controllers\TestController','index']);
+    $r->addRoute('GET', '/cookie', ['App\Controllers\TestController','cookie']);
+    $r->addRoute('POST', '/post', ['App\Controllers\TestController','post']);
+    $r->addRoute('GET', '/konversi', ['App\Controllers\TestController','konversi']);
     $r->addRoute('GET', '/article/{id}', ['App\Controllers\ArticleController', 'show']);
 });
 
@@ -21,12 +24,12 @@ $route = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI
 switch ($route[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         //call controller 404 notfound
-        $container->call(['App\Controllers\PageResponseController','halaman404']);
+        $container->call(['App\Controllers\PageController','halaman404']);
         break;
 
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         //call controller 405 method not allowed
-        $container->call(['App\Controllers\PageResponseController','halaman405']);
+        $container->call(['App\Controllers\PageController','halaman405']);
         break;
 
     case FastRoute\Dispatcher::FOUND:
