@@ -6,6 +6,11 @@ use Valitron\Validator;
 use Medoo\Medoo;
 use App\Utils\HeaderResponse;
 use WebPConvert\WebPConvert;
+use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Parser;
+use Lcobucci\JWT\ValidationData;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Bcrypt\Bcrypt;
 
 class TestController
 {
@@ -62,6 +67,41 @@ class TestController
         echo "<img src='../storage/images/coba.webp'>";
     }
 
+    public function create_token()
+    {
+       $time = time();
+       $token = (new Builder())->issuedBy('https://api.localhost')
+            ->permittedFor('https://example.com') 
+            ->identifiedBy('4f1g23a12aa', true) 
+            ->issuedAt($time)
+            ->sign(new Sha256(),"kakek") 
+            ->canOnlyBeUsedAfter($time) 
+            ->expiresAt($time + 3600) 
+            ->withClaim('uid',1) 
+            ->getToken(); 
+        echo $token;
+    }
+
+    public function validate_token(){
+        $headers = apache_request_headers();
+        $auth = $headers['Authorization'];
+        if (preg_match('/Bearer\s(\S+)/', $auth, $matches)) {
+            $token = (new Parser())->parse((string) $matches[1]);
+            $data = new ValidationData();
+            $data->setIssuer('https://api.localhost');
+            $data->setAudience('https://example.com');
+            $data->setId('4f1g23a12aa');
+            if ($token->validate($data)){                
+                echo $this->response->json_response(200, "token berhasil validasi");
+            }else{
+                echo $this->response->json_response(200, "token tidak ter-validasi");                
+            }
+
+        }else{
+            echo 'Header Tidak benar';
+        }
+    }
+
     public function post()
     {
         $v = new Validator($_POST);
@@ -75,4 +115,31 @@ class TestController
         }
     }
 
+    public function password()
+    {
+        $bcrypt = new Bcrypt();
+        //Encrypt the plaintext
+        $plaintext = 'password';
+
+        //Set the Bcrypt Version, default is '2y'
+        $bcrypt_version = '2a';
+        $ciphertext = $bcrypt->encrypt($plaintext,$bcrypt_version);
+        print_r("\n Plaintext:".$plaintext);
+        print_r("\n Ciphertext:".$ciphertext);
+    }
+
+    public function login()
+    {
+        $bcrypt = new Bcrypt();
+        //Encrypt the plaintext
+        $plaintext = 'password';
+        //Set the Bcrypt Version, default is '2y'
+        $bcrypt_version = '2a';
+        $ciphertext = $bcrypt->encrypt($plaintext,$bcrypt_version);
+        if($bcrypt->verify($_POST["password"], $ciphertext)){
+            print_r("\n Password verified!");
+        }else{
+            print_r("\n Password not match!");
+        }
+    }    
 }

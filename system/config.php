@@ -29,4 +29,5 @@ return [
 	        'password' => $dbconfig['password']
     	]);
     },
+    // end
 ];

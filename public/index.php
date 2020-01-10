@@ -12,11 +12,15 @@ $container = require __DIR__ . '/../system/bootstrap.php';
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/', 'App\Controllers\HomeController');
+    $r->addRoute('GET', '/article/{id}', ['App\Controllers\ArticleController', 'show']);
     $r->addRoute('GET', '/test', ['App\Controllers\TestController','index']);
     $r->addRoute('GET', '/cookie', ['App\Controllers\TestController','cookie']);
     $r->addRoute('POST', '/post', ['App\Controllers\TestController','post']);
     $r->addRoute('GET', '/konversi', ['App\Controllers\TestController','konversi']);
-    $r->addRoute('GET', '/article/{id}', ['App\Controllers\ArticleController', 'show']);
+    $r->addRoute('GET', '/token', ['App\Controllers\TestController','create_token']);
+    $r->addRoute('GET', '/validate', ['App\Controllers\TestController','validate_token']);
+    $r->addRoute('GET', '/password', ['App\Controllers\TestController','password']);
+    $r->addRoute('POST', '/login', ['App\Controllers\TestController','login']);
 });
 
 $route = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
