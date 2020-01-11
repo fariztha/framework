@@ -21,7 +21,7 @@ export default {
     input: './resource/javascript/main.js',
     output: {
         file: './public/assets/js/bundle.min.js',
-        format: 'umd', 
+        format: 'iife', 
         name: 'bundle.min',
         globals: {
             'lodash': '_',
