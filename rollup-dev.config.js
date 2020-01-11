@@ -2,10 +2,8 @@ import babel from 'rollup-plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
-import { uglify } from 'rollup-plugin-uglify';
 import copy from 'rollup-plugin-copy';
 import sass from 'rollup-plugin-sass';
-import cssnano from 'cssnano';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 
@@ -34,14 +32,13 @@ export default {
             exclude: 'node_modules/**'
         }),    	
         replace({
-            'process.env.NODE_ENV': JSON.stringify('production')
+            'process.env.NODE_ENV': JSON.stringify('development')
         }),
-        commonjs(),                
-        uglify(),
+        commonjs(),        
 	  	sass({
 	  		output: true,
 	  		output: './public/assets/css/bundle.min.css',
-	  		processor: css => postcss([autoprefixer,cssnano()])
+	  		processor: css => postcss([autoprefixer])
 		    .process(css,{from:undefined,to:undefined})
 		    //.then(result => result.css)
 	  	}),
