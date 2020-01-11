@@ -15,7 +15,7 @@ return [
     Environment::class => function () {
         $loader = new FilesystemLoader(__DIR__ . '/../resource/views');
         return new Environment($loader, [
-    		'cache' => __DIR__.'/../storage/cache/twig',
+    		//'cache' => __DIR__.'/../storage/cache/twig',
 		]);                        
     },	
     //database    

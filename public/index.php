@@ -11,6 +11,9 @@ use FastRoute\RouteCollector;
 $container = require __DIR__ . '/../system/bootstrap.php';
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
+//$dispatcher = FastRoute\cachedDispatcher(function (RouteCollector $r) {
+
+
     $r->addRoute('GET', '/', 'App\Controllers\HomeController');
     $r->addRoute('GET', '/article/{id}', ['App\Controllers\ArticleController', 'show']);
     $r->addRoute('GET', '/test', ['App\Controllers\TestController','index']);
@@ -22,7 +25,12 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/password', ['App\Controllers\TestController','password']);
     $r->addRoute('POST', '/login', ['App\Controllers\TestController','login']);
     $r->addRoute('GET', '/smtp', ['App\Controllers\TestController','Send_email']);
-});
+
+
+},[
+    //'cacheFile' => __DIR__ . '/../storage/cache/route/route.cache', /* required */
+    //'cacheDisabled' => IS_DEBUG_ENABLED,     /* optional, enabled by default */
+]);
 
 $route = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 
