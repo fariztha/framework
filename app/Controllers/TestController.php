@@ -11,6 +11,9 @@ use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\ValidationData;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Bcrypt\Bcrypt;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 class TestController
 {
@@ -141,5 +144,48 @@ class TestController
         }else{
             print_r("\n Password not match!");
         }
-    }    
+    }
+
+    public function Send_email()
+    {
+       
+        // Instantiation and passing `true` enables exceptions
+        $mail = new PHPMailer(true);
+        try {
+            //Server settings
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+            $mail->isSMTP();                                            // Send using SMTP
+            $mail->Host       = 'smtp.mailtrap.io';                    // Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+            $mail->Username   = '53ddbad0bdb92b';                     // SMTP username
+            $mail->Password   = '7bba11f98dcee8';                               // SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+            $mail->Port       = 2525;                                    // TCP port to connect to
+
+            //Recipients
+            $mail->setFrom('from@sempak.com', 'Mailer');
+            $mail->addAddress('joe@sempak.net', 'Joe User');     // Add a recipient
+            $mail->addAddress('ellen@sempak.com');               // Name is optional
+            $mail->addReplyTo('info@sempak.com', 'Information');
+            $mail->addCC('cc@sempak.com');
+            $mail->addBCC('bcc@sempak.com');
+
+            // Attachments
+            //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+            //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+
+            // Content
+            $mail->isHTML(true);                                  // Set email format to HTML
+            $mail->Subject = 'Projek Telah Tedanai';
+            $mail->Body    = 'Kalau Lapar <b>Yah Makan Broo</b>';
+            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            $mail->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+
+    }
+
 }

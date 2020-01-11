@@ -21,6 +21,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/validate', ['App\Controllers\TestController','validate_token']);
     $r->addRoute('GET', '/password', ['App\Controllers\TestController','password']);
     $r->addRoute('POST', '/login', ['App\Controllers\TestController','login']);
+    $r->addRoute('GET', '/smtp', ['App\Controllers\TestController','Send_email']);
 });
 
 $route = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
