@@ -4,9 +4,11 @@ import commonjs from 'rollup-plugin-commonjs';
 import { uglify } from 'rollup-plugin-uglify';
 import copy from 'rollup-plugin-copy';
 import sass from 'rollup-plugin-sass';
+import replace from 'rollup-plugin-replace';
 import cssnano from 'cssnano';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
+
 
 //amd – Asynchronous Module Definition, used with module loaders like RequireJS
 //cjs – CommonJS, suitable for Node and other bundlers
@@ -19,18 +21,21 @@ export default {
     input: './resource/javascript/main.js',
     output: {
         file: './public/assets/js/bundle.min.js',
-        format: 'amd', 
-        name: 'bundle',
+        format: 'umd', 
+        name: 'bundle.min',
         globals: {
             'lodash': '_',
         }
     },
     plugins: [
+    	resolve(),
         babel({
             exclude: 'node_modules/**'
+        }),    	
+        replace({
+            'process.env.NODE_ENV': JSON.stringify('production')
         }),
-        resolve(),
-        commonjs(),
+        commonjs(),                
         uglify(),
 	  	sass({
 	  		output: true,
