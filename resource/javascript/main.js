@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import sayHello from './components/MyModule';
 import MyComponent from './components/reactcomponent';
 import _ from 'lodash';
+
 import '../sass/main.scss';
 
 const MyComponentElement = document.getElementById('root');
