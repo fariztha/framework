@@ -4,10 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import { uglify } from 'rollup-plugin-uglify';
 import copy from 'rollup-plugin-copy';
-import sass from 'rollup-plugin-sass';
-import cssnano from 'cssnano';
-import postcss from 'postcss';
-import autoprefixer from 'autoprefixer';
+import scss from 'rollup-plugin-scss';
 
 
 //amd – Asynchronous Module Definition, used with module loaders like RequireJS
@@ -24,7 +21,6 @@ export default {
         format: 'iife', 
         name: 'bundle.min',
         globals: {
-            'lodash': '_',
             'jquery': '$',
         }
     },
@@ -38,13 +34,11 @@ export default {
         }),
         commonjs(),                
         uglify(),
-	  	sass({
-	  		output: true,
-	  		output: './public/assets/css/bundle.min.css',
-	  		processor: css => postcss([autoprefixer,cssnano()])
-		    .process(css,{from:undefined,to:undefined})
-		    //.then(result => result.css)
-	  	}),
+        scss({
+            output: true,
+            outputStyle: "compressed",
+            output: './public/assets/css/bundle.min.css',
+        }),
         copy({
 	      targets: [	        
 	        { src: './resource/assets/*', dest: './public/assets' }

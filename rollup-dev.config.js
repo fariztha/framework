@@ -3,9 +3,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import copy from 'rollup-plugin-copy';
-import sass from 'rollup-plugin-sass';
-import postcss from 'postcss';
-import autoprefixer from 'autoprefixer';
+import scss from 'rollup-plugin-scss';
 
 
 //amd – Asynchronous Module Definition, used with module loaders like RequireJS
@@ -21,8 +19,7 @@ export default {
         file: './public/assets/js/bundle.min.js',
         format: 'iife', 
         name: 'bundle.min',
-        globals: {
-            'lodash': '_',
+        globals: {            
             'jquery': '$',
         }
     },
@@ -34,14 +31,11 @@ export default {
         replace({
             'process.env.NODE_ENV': JSON.stringify('development')
         }),
-        commonjs(),        
-	  	sass({
-	  		output: true,
-	  		output: './public/assets/css/bundle.min.css',
-	  		processor: css => postcss([autoprefixer])
-		    .process(css,{from:undefined,to:undefined})
-		    //.then(result => result.css)
-	  	}),
+        commonjs(),
+        scss({
+            output: true,            
+            output: './public/assets/css/bundle.min.css',
+        }),
         copy({
 	      targets: [	        
 	        { src: './resource/assets/*', dest: './public/assets' }

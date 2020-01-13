@@ -14,8 +14,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 //$dispatcher = FastRoute\cachedDispatcher(function (RouteCollector $r) {
 
 
-    $r->addRoute('GET', '/', 'App\Controllers\HomeController');
-    $r->addRoute('GET', '/article/{id}', ['App\Controllers\ArticleController', 'show']);
+    $r->addRoute('GET', '/', ['App\Controllers\TestController','home']);
+    $r->addRoute('GET', '/article/{id}', ['App\Controllers\TestController', 'article']);
     $r->addRoute('GET', '/test', ['App\Controllers\TestController','index']);
     $r->addRoute('GET', '/cookie', ['App\Controllers\TestController','cookie']);
     $r->addRoute('POST', '/post', ['App\Controllers\TestController','post']);

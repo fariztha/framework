@@ -2,23 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import sayHello from './components/MyModule';
 import MyComponent from './components/reactcomponent';
-import _ from 'lodash';
-import $ from "jquery";
-
+import $ from 'jquery';
+import 'bootstrap';
 import '../sass/main.scss';
 
 const MyComponentElement = document.getElementById('root');
+console.log(MyComponentElement);
 
 if (MyComponentElement) {
-  ReactDOM.render(<MyComponent/>, MyComponentElement);
-  const arr = _.concat([1, 2, 3], 4, [7]);
-  sayHello('Hello from Rollup and lodash: ' + arr);
+  ReactDOM.render(<MyComponent/>, MyComponentElement);  
+  sayHello('Hello from Rollup');
 }
-    
-$("#btn1").click(function(){
-    alert("Text: " + $("#test").text());
-});
-
-$("#btn2").click(function(){
-    alert("HTML: " + $("#test").html());
-});

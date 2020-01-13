@@ -1,11 +1,9 @@
 import React from 'react';
-import $ from "jquery";
+
 
 export default class MyComponent extends React.Component {
   componentDidMount() {
-    $("button").click(function() {
-      $("h1").toggleClass("red");
-    });
+ 
   }
   render() {
     return (

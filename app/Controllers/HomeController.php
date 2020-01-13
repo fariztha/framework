@@ -2,10 +2,9 @@
 namespace App\Controllers;
 
 use App\Model\ArticleRepository;
-//use Twig_Environment;
 use Twig\Environment as Twig_Environment;
 
-class HomeController
+class HomeController 
 {
     /**
      * @var ArticleRepository

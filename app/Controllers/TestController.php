@@ -14,17 +14,37 @@ use Bcrypt\Bcrypt;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use Twig\Environment as Twig_Environment;
+use App\Model\ArticleRepository;
 
 class TestController
 {
-	protected $database;
-    protected $response;
+	private $database;
+    private $response;
+    private $repository;
+    private $twig;
 
-    public function __construct(Medoo $database,HeaderResponse $response){
-         $this->database = $database;
-         $this->response = $response;
+    public function __construct(Medoo $database,HeaderResponse $response,ArticleRepository $repository, Twig_Environment $twig)
+    {
+        $this->database = $database;
+        $this->response = $response;
+        $this->repository = $repository;
+        $this->twig = $twig;
     }
 
+    public function home()
+    {        
+        echo $this->twig->render('home.twig', [
+            'articles' => $this->repository->getArticles(),
+        ]);
+    }
+
+    public function article($id)
+    {        
+        echo $this->twig->render('article.twig', [
+            'article' => $this->repository->getArticle($id),
+        ]);
+    }
 
 	public function index()
     {            
