@@ -1,9 +1,10 @@
+{% apply spaceless %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-    <title>Demo HTML base element</title>
+    <title>{% block title %}{% endblock %}</title>
     <base href="http://localhost/manajer-investasi/public/">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
     <link rel="stylesheet" href="assets/css/bundle.min.css">        
@@ -14,6 +15,7 @@
         {% block content %}
         {% endblock %}
     </div>    
-    <script src="assets/js/bundle.min.js"></script>
+    <script type="application/javascript" src="assets/js/bundle.min.js"></script>
 </body>
 </html>
+{% endapply %}
