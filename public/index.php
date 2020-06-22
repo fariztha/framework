@@ -12,11 +12,10 @@ $container = require __DIR__ . '/../system/bootstrap.php';
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 //$dispatcher = FastRoute\cachedDispatcher(function (RouteCollector $r) {
-
-
+    
     $r->addRoute('GET', '/', ['App\Controllers\TestController','home']);
     $r->addRoute('GET', '/article/{id}', ['App\Controllers\TestController', 'article']);
-    $r->addRoute('GET', '/test', ['App\Controllers\TestController','index']);
+    $r->addRoute('GET', '/coba', ['App\Controllers\TestController','index']);
     $r->addRoute('GET', '/cookie', ['App\Controllers\TestController','cookie']);
     $r->addRoute('POST', '/post', ['App\Controllers\TestController','post']);
     $r->addRoute('GET', '/konversi', ['App\Controllers\TestController','konversi']);
@@ -26,7 +25,13 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('POST', '/login', ['App\Controllers\TestController','login']);
     $r->addRoute('GET', '/smtp', ['App\Controllers\TestController','Send_email']);
 
-
+    // Clien api
+    $r->addGroup('/api/client', function (RouteCollector $r) {
+        $r->addRoute('POST', '/auth', ['App\Controllers\AuthController','login']);
+        $r->addRoute('GET', '/coba', ['App\Controllers\CobaApiController','coba']);
+    });
+    
+    
 },[
     //'cacheFile' => __DIR__ . '/../storage/cache/route/route.cache', /* required */
     //'cacheDisabled' => IS_DEBUG_ENABLED,     /* optional, enabled by default */

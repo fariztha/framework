@@ -7,10 +7,7 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Medoo\Medoo;
 
-return [
-    // Bind an interface to an implementation
-    ArticleRepository::class => create(InMemoryArticleRepository::class),
-
+return [ 
     // Configure Twig
     Environment::class => function () {
         $loader = new FilesystemLoader(__DIR__ . '/../resource/views');

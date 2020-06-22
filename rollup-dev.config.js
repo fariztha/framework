@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
@@ -20,7 +20,7 @@ export default {
         format: 'iife', 
         name: 'bundle.min',
         globals: {            
-            'jquery': '$',
+            //'jquery': '$',
         }
     },
     plugins: [

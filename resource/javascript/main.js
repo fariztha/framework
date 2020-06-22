@@ -2,14 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import sayHello from './components/MyModule';
 import MyComponent from './components/reactcomponent';
-import $ from 'jquery';
-import 'bootstrap';
+import { Dropdown , Button, Card, Row, Col } from 'react-materialize';
+import M from 'materialize-css'
+import 'materialize-css/sass/materialize.scss';
 import '../sass/main.scss';
 
-const MyComponentElement = document.getElementById('root');
-console.log(MyComponentElement);
+const App = ({name}) =>
+  <Dropdown trigger={
+    <Button>Drop me!</Button>
+  }>
+    <p>Hello</p>
+    <p>Hello</p>
+    <p>Hello</p>
+    <p>Bye</p>
+  </Dropdown>;
 
-if (MyComponentElement) {
-  ReactDOM.render(<MyComponent/>, MyComponentElement);  
-  sayHello('Hello from Rollup');
-}
+ReactDOM.render(
+  <App />, document.getElementById('root')
+);

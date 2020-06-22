@@ -15,7 +15,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 use Twig\Environment as Twig_Environment;
-use App\Model\ArticleRepository;
+
 
 class TestController
 {
@@ -24,25 +24,31 @@ class TestController
     private $repository;
     private $twig;
 
-    public function __construct(Medoo $database,HeaderResponse $response,ArticleRepository $repository, Twig_Environment $twig)
+    public function __construct(Medoo $database,HeaderResponse $response, Twig_Environment $twig)
     {
         $this->database = $database;
-        $this->response = $response;
-        $this->repository = $repository;
+        $this->response = $response;        
         $this->twig = $twig;
     }
 
     public function home()
     {        
+            $columns = [
+                'id',
+                'created_at',
+                'name',
+            ];
+
+        $data=$this->database->select('profiles', $columns);
         echo $this->twig->render('home.twig', [
-            'articles' => $this->repository->getArticles(),
+            'articles' => $data
         ]);
     }
 
     public function article($id)
     {        
         echo $this->twig->render('article.twig', [
-            'article' => $this->repository->getArticle($id),
+            'article' => "Artikel ID ,".$id
         ]);
     }
 
@@ -93,8 +99,8 @@ class TestController
     public function create_token()
     {
        $time = time();
-       $token = (new Builder())->issuedBy('https://api.localhost')
-            ->permittedFor('https://example.com') 
+       $token = (new Builder())->issuedBy('https://localhost')
+            ->permittedFor('https://localhost') 
             ->identifiedBy('4f1g23a12aa', true) 
             ->issuedAt($time)
             ->sign(new Sha256(),"kakek") 

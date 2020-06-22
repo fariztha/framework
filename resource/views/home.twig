@@ -2,28 +2,7 @@
 {% extends 'layout.twig' %}
 
 {% block content %}
+  
+  <div id="root"></div>
 
-    <h1>Welcome to the blog!</h1>
-    <div class="alert alert-primary" role="alert">
-      A simple primary alert—check it out!
-    </div>
-    <p>Have a look at our articles:</p>
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    <ul class="collection">
-
-        {% for article in articles %}
-            <li class="collection-item avatar">
-
-                <i class="mdi-editor-insert-comment circle"></i>
-
-                <span class="title">{{ article.title }}</span>
-
-                <p>{{ article.content }}</p>
-
-                <p><a href="article/{{ article.id }}">Read more</a></p>
-
-            </li>
-        {% endfor %}
-
-    </ul>
 {% endblock %}
