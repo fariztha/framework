@@ -1,43 +1,46 @@
 <?php
-$base  = dirname($_SERVER['PHP_SELF']);
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+use FastRoute\RouteCollector;
 
-// Update request when we have a subdirectory    
+/* jika aplikasi ada di subdirectory  */
+// $base  = dirname($_SERVER['PHP_SELF']);
 // if(ltrim($base, '/')){ 
 //     $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
 // }
 
-use FastRoute\RouteCollector;
+/* http redirect to https  */
+// if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") {
+//     $location = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+//     header('HTTP/1.1 301 Moved Permanently');
+//     header('Location: ' . $location);
+//     exit;
+// }
 
-$container = require __DIR__ . '/../system/bootstrap.php';
+$container = require __DIR__ . '/../bootstrap/bootstrap.php';
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
-//$dispatcher = FastRoute\cachedDispatcher(function (RouteCollector $r) {
-    
-    $r->addRoute('GET', '/', ['App\Controllers\TestController','home']);
-    $r->addRoute('GET', '/article/{id}', ['App\Controllers\TestController', 'article']);
-    $r->addRoute('GET', '/coba', ['App\Controllers\TestController','index']);
-    $r->addRoute('GET', '/cookie', ['App\Controllers\TestController','cookie']);
-    $r->addRoute('POST', '/post', ['App\Controllers\TestController','post']);
-    $r->addRoute('GET', '/konversi', ['App\Controllers\TestController','konversi']);
-    $r->addRoute('GET', '/token', ['App\Controllers\TestController','create_token']);
-    $r->addRoute('GET', '/validate', ['App\Controllers\TestController','validate_token']);
-    $r->addRoute('GET', '/password', ['App\Controllers\TestController','password']);
-    $r->addRoute('POST', '/login', ['App\Controllers\TestController','login']);
-    $r->addRoute('GET', '/smtp', ['App\Controllers\TestController','Send_email']);
-
-    // Clien api
-    $r->addGroup('/api/client', function (RouteCollector $r) {
-        $r->addRoute('POST', '/auth', ['App\Controllers\AuthController','login']);
-        $r->addRoute('GET', '/coba', ['App\Controllers\CobaApiController','coba']);
-    });
-    
-    
+//$dispatcher = FastRoute\cachedDispatcher(function (RouteCollector $r) { 
+    //page
+    $r->addRoute('GET', '/', ['App\Controllers\CobaController','index']);     
+    // Siswa Api
+    $r->addGroup('/api', function (RouteCollector $r) {
+        //authentikasi
+        $r->addRoute('POST', '/auth', ['App\ApiControllers\AuthController','login']);                      
+        //protected page
+        $r->addRoute('GET', '/protected', ['App\ApiControllers\ProtectController','index']); 
+        $r->addRoute('POST', '/protected', ['App\ApiControllers\ProtectController','indexPost']); 
+        $r->addRoute('PATCH', '/protected', ['App\ApiControllers\ProtectController','indexPatch']); 
+        $r->addRoute('DELETE', '/protected', ['App\ApiControllers\ProtectController','indexDelete']);         
+        //-----
+    });       
 },[
     //'cacheFile' => __DIR__ . '/../storage/cache/route/route.cache', /* required */
     //'cacheDisabled' => IS_DEBUG_ENABLED,     /* optional, enabled by default */
 ]);
 
-$route = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+$uri = rawurldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
+$route = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'],$uri);
 
 switch ($route[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:

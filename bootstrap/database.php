@@ -1,6 +1,6 @@
 <?php
 // Database.
-$name = 'test';
+$name = 'framework';
 $username = 'root';
 $password = '';
 $host = 'localhost';

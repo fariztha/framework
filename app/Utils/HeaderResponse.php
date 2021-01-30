@@ -23,6 +23,9 @@ class HeaderResponse
     $status = array(
         200 => '200 OK',
         400 => '400 Bad Request',
+        404 => '404 Not Found',
+        405 => '405 Method not allowed',
+        401 => 'Unauthorized',
         422 => 'Unprocessable Entity',
         500 => '500 Internal Server Error'
         );

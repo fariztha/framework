@@ -2,9 +2,11 @@ import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
-import { uglify } from 'rollup-plugin-uglify';
+import uglify from "@lopatnov/rollup-plugin-uglify";
 import copy from 'rollup-plugin-copy';
 import scss from 'rollup-plugin-scss';
+import json from '@rollup/plugin-json';
+import nodePolyfills from 'rollup-plugin-node-polyfills';
 
 
 //amd – Asynchronous Module Definition, used with module loaders like RequireJS
@@ -16,6 +18,7 @@ import scss from 'rollup-plugin-scss';
 
 export default {
     input: './resource/javascript/main.js',
+    onwarn,
     output: {
         file: './public/assets/js/bundle.min.js',
         format: 'iife', 
@@ -25,15 +28,16 @@ export default {
         }
     },
     plugins: [
-    	resolve(),
+        resolve({ preferBuiltins: true, mainFields: ['browser'] }),        
         babel({
             exclude: 'node_modules/**'
         }),    	
         replace({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
-        commonjs(),                
-        uglify(),
+        commonjs(),
+        nodePolyfills(),
+        json(),        
         scss({
             output: true,
             outputStyle: "compressed",
@@ -43,6 +47,13 @@ export default {
 	      targets: [	        
 	        { src: './resource/assets/*', dest: './public/assets' }
 	      ]
-	    })
+        }),
+        uglify({compress: true})
     ]
+}
+
+function onwarn(warning) {
+    if (warning.code !== 'CIRCULAR_DEPENDENCY') {
+        console.error(`(!) ${warning.message}`);
+    }
 }
