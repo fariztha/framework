@@ -21,7 +21,7 @@ $container = require __DIR__ . '/../bootstrap/bootstrap.php';
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 //$dispatcher = FastRoute\cachedDispatcher(function (RouteCollector $r) { 
     //page
-    $r->addRoute('GET', '/', ['App\Controllers\CobaController','index']);     
+    $r->addRoute('GET', '/', ['App\Controllers\MainController','index']);     
     // Siswa Api
     $r->addGroup('/api', function (RouteCollector $r) {
         //authentikasi

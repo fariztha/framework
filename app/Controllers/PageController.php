@@ -7,7 +7,7 @@ class PageController
 {
     public function __construct(HeaderResponse $response)
     {      
-        $views = __DIR__ . '/../../resource/views';
+        $views = __DIR__ . '/../../resources/views';
         $cache = __DIR__ . '/../../storage/cache';  
         $this->response = $response;
         $this->blade = new BladeOne($views,$cache,BladeOne::MODE_AUTO);             
