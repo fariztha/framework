@@ -26,8 +26,7 @@ export default {
     plugins: [
         vuePlugin({
             compileTemplate: true,
-        }),
-        uglify({compress: true}),
+        }),        
         resolve({
             extensions: ['.vue', '.js', '.jsx', '.json'],
             preferBuiltins: true ,
@@ -49,7 +48,8 @@ export default {
 	      targets: [	        
 	        { src: './resources/assets/*', dest: './public/assets' }
 	      ]
-        }) 
+        }),
+        uglify({compress: true}),
     ]
 }
 
