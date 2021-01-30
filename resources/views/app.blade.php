@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title', 'Framework')
 @section('content')
-    <div id="app">        
+    <main id="app" class="wrapper">        
         <router-view></router-view>      
-    </div>
+    </main>
 @endsection

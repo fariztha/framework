@@ -1,6 +1,8 @@
 <template>
     <div class="container">
-        <h5>subdashboard</h5>
+        <h5>Halaman Subdashboard</h5>
+        <a href="#/dashboard">Kembali</a>
+        <hr />
         <button type="button" @click="testCoba()">
         coba tombol
         </button>

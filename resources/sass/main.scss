@@ -1,6 +1,6 @@
 // Modules
 // ––––––––––––––––––––––––––––––––––––––––––––––––––
-
+@import 'normalize';
 @import 'minimal/Color';
 @import 'minimal/Base';
 @import 'minimal/Blockquote';
@@ -16,3 +16,29 @@
 @import 'minimal/Typography';
 @import 'minimal/Image';
 @import 'minimal/Utility';
+
+// navigasi
+.wrapper {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+.navigation {
+    background: #f4f5f6;
+    border-bottom: .1rem solid #d1d1d1;
+    display: block;
+    height: 5.2rem;
+    left: 0;
+    max-width: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    align-items: center;
+    display: flex;
+}
+.konten {
+    padding-top: 6rem;    
+}
