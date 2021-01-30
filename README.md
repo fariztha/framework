@@ -1,1 +1,1 @@
-# Framework Bisanedev Boilerplate web application framework
+# Framework Boilerplate web application framework
