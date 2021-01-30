@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1>dashboard</h1>
+        <h5>dashboard</h5>
         <button type="button" @click="testCoba()">
         coba tombol
         </button>
@@ -26,7 +26,7 @@ export default {
 
     },
     methods: {
-        testCoba = () => {
+        testCoba: function () {          
             alert("halooo apakabar");
         }
     }

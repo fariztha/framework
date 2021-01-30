@@ -1,4 +1,3 @@
-import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
@@ -7,7 +6,7 @@ import copy from 'rollup-plugin-copy';
 import scss from 'rollup-plugin-scss';
 import json from '@rollup/plugin-json';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
-
+import vuePlugin from 'rollup-plugin-vue';
 
 //amd – Asynchronous Module Definition, used with module loaders like RequireJS
 //cjs – CommonJS, suitable for Node and other bundlers
@@ -17,20 +16,23 @@ import nodePolyfills from 'rollup-plugin-node-polyfills';
 //system – Native format of the SystemJS loader
 
 export default {
-    input: './resource/javascript/main.js',
+    input: './resources/javascript/main.js',
     onwarn,
     output: {
         file: './public/assets/js/bundle.min.js',
-        format: 'iife', 
-        name: 'bundle.min',
-        globals: {
-            //'jquery': '$',
-        }
+        format: 'esm', 
+        name: 'bundle.min'
     },
     plugins: [
-        resolve({ preferBuiltins: true, mainFields: ['browser'] }),        
-        babel({
-            exclude: 'node_modules/**'
+        vuePlugin({
+            compileTemplate: true,
+        }),
+        uglify({compress: true}),
+        resolve({
+            extensions: ['.vue', '.js', '.jsx', '.json'],
+            preferBuiltins: true ,
+            mainFields: ['browser'],
+            browser: true
         }),    	
         replace({
             'process.env.NODE_ENV': JSON.stringify('production')
@@ -45,10 +47,9 @@ export default {
         }),
         copy({
 	      targets: [	        
-	        { src: './resource/assets/*', dest: './public/assets' }
+	        { src: './resources/assets/*', dest: './public/assets' }
 	      ]
-        }),
-        uglify({compress: true})
+        }) 
     ]
 }
 
