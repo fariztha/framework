@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">    
-    <link rel="stylesheet" href="http://fonts.cdnfonts.com/css/metropolis-2">    
-    <title>@yield('title')</title>    
-    <!-- Core -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>@yield('title')</title>       	
+    <!-- Core -->    
     <link rel="stylesheet" href="assets/css/bundle.min.css">    
   </head>
   <body>   

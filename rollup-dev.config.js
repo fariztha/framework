@@ -21,7 +21,10 @@ export default {
     output: {
         file: './public/assets/js/bundle.min.js',
         format: 'esm',         
-        name: 'bundle.min'       
+        name: 'bundle.min',
+        globals: {            
+            'jquery': '$',
+        }     
     },
     plugins: [
         resolve({

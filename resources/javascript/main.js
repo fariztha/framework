@@ -1,5 +1,9 @@
 import VueRouter from 'vue';
 import router from './router';
+/* bootstrap */
+import 'popper.js';
+import 'bootstrap';
+import 'jquery';
 /* sass include */
 import '../sass/main.scss';
 

@@ -43,10 +43,10 @@ class AuthController
                     ->identifiedBy('Framework', true)      
                     ->issuedAt($time)
                     ->canOnlyBeUsedAfter($time) 
-                    ->expiresAt($time + 315360000) 
+                    ->expiresAt($time + 31536000)  //setahun
                     ->withClaim('uid',$cekAuth[0]['id'])                    
                     ->getToken($signer, new Key($cekAuth[0]['password']));
-                    $this->database->update("users",["expired_token" => $time + 315360000],["id" => $cekAuth[0]['id']]);                    
+                    $this->database->update("users",["expired_token" => $time + 31536000],["id" => $cekAuth[0]['id']]);                    
                     $data = array("data" => $token);
                     echo $this->response->json_response(200,$data);
                 }else{

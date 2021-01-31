@@ -38,35 +38,5 @@ const routes = [
       history: VueRouter.createWebHashHistory(),
       routes, // short for `routes: routes`
   });
-
-  router.beforeEach((to, from, next) => {
-    const publicPages = ['/login'];
-    const authRequired = publicPages.includes(to.path);
-    const loggedIn = window.localStorage.getItem('token'); 
-    // login
-    if (!authRequired && !loggedIn) {
-      console.log('not authorized')
-      router.push({ path: 'login' })    
-    }else if (authRequired && loggedIn){
-      console.log('authorized')
-      router.push({ path: 'dashboard' })     
-    }else{
-      //meta akses
-      if (!to.meta.akses){
-        next() 
-      }else{  
-        //var akses = jwt_decode(loggedIn);
-        var akses = "superuser";
-        if (akses.role == to.meta.akses || akses.role == "superuser" ) {
-          console.log('authorized')      
-          next()
-        } else {
-          console.log('not authorized')
-          router.push({ path: 'dashboard' })
-        }
-      }
-      //end next()
-    }
-  });
               
 export default router
