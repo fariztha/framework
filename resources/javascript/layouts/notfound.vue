@@ -1,9 +1,9 @@
 <template>
         <div class="container text-center" style="margin-top:160px;">
           <h1> 404</h1>
-          <button :disabled="disable" v-on:click="back()">
-             kembali
-          </button>
+          <button type="button" class="btn btn-primary" :disabled="disable"  v-on:click="back()">
+            kembali
+          </button>   
         </div>
 </template>
 <script type="application/javascript">

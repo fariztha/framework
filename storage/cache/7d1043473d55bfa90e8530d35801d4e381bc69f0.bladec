@@ -1,0 +1,8 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('title', 'Framework'); ?>
+<?php $this->startSection('content'); ?>
+ <main id="app" class="wrapper">        
+ <router-view></router-view>      
+ </main>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout'); } ?>
